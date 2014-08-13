@@ -1,0 +1,13 @@
+{
+  "name": "DOM_Visualizer",
+  "version": "0.0.0",
+  "authors": [
+    "Romain Bohdanowicz <romain.bohdanowicz@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "d3": "~3.4.11",
+    "ace-builds": "~1.1.5"
+  }
+}
