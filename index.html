@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>DOM Visualizer</title>
 
-    <link rel="stylesheet" href="../bower_components/semantic-ui/build/packaged/css/semantic.css">
+    <link rel="stylesheet" href="bower_components/semantic-ui/build/packaged/css/semantic.css">
     <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/collections/menu.css">-->
     <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/collections/form.css">-->
     <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/elements/input.css">-->
@@ -12,7 +12,7 @@
     <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/elements/button.css">-->
     <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/elements/label.css">-->
     <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/modules/checkbox.css">-->
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <!--<script src="../bower_components/jquery-ui/jquery-ui.js"></script>-->
     <!--<script src="../bower_components/semantic-ui/build/packaged/javascript/semantic.js"></script>-->
     <!--<script src="../bower_components/semantic-ui/build/uncompressed/modules/checkbox.js"></script>-->
@@ -216,26 +216,26 @@
 
 <!-- build:js app/vendor.js -->
 <!-- bower:js -->
-<script src="../bower_components/d3/d3.js"></script>
-<script src="../bower_components/requirejs/require.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/requirejs/require.js"></script>
 <!-- endbower -->
 <!--<script src="../bower_components/node-delta/dist/browser/delta.js"></script>-->
 <!--<script src="../bower_components/ace-builds/src/ace.js"></script>-->
 <!-- endbuild -->
 
 
-<script src="../d3.domVisualizer.min.js"></script>
+<script src="d3.domVisualizer.min.js"></script>
 <script>
     require.config({
         paths: {
-            "ace": "../bower_components/ace/lib/ace",
-            "d3": "../bower_components/d3/d3",
-            "delta": "../bower_components/node-delta/lib",
-            "xmlshim": "../bower_components/node-delta/node_modules/xmlshim"
+            "ace": "bower_components/ace/lib/ace",
+            "d3": "bower_components/d3/d3",
+            "delta": "bower_components/node-delta/lib",
+            "xmlshim": "bower_components/node-delta/node_modules/xmlshim"
         }
     });
 
-    require(["ace/ace", "d3", "js/d3.domVisualizer"], function (ace, d3, domVisualizer) {
+    require(["ace/ace", "bower_components/d3/d3", "js/d3.domVisualizer"], function (ace, d3, domVisualizer) {
 
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
