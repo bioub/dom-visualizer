@@ -1,0 +1,11 @@
+{
+    "bitwise": true, // prohibits | (confusion with ||)
+    "camelcase": true, // forces to use camelCase
+    "curly": true, // forces to use braces in conditions/loops
+    "eqeqeq": true, // forces to use ===
+//    "es3": true, // assumes ECMAScript 3 (IE 6 to 9)
+    "forin": true, // checks for in loops uses hasOwnProperty
+    "freeze": true, // prohibits to extends native objects
+    "immed": true
+//    "plusplus": true
+}
