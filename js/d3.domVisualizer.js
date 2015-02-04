@@ -1,4 +1,4 @@
-define(['d3', 'delta/main'], function (d3, DeltaJS) {
+define(['../bower_components/d3/d3', 'delta/main'], function (d3, DeltaJS) {
     d3.domVisualizer = function(container, options, undefined) {
         options = options || {};
         this.d3TreeRoot = false;
