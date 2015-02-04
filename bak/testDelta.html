@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../delta.js"></script>
+</head>
+<body>
+<script>
+    var htmlStr = '<!doctype html>' +
+            '<html>' +
+            '<head>' +
+            '<meta charset="UTF-8">' +
+            '<title>Title</title>' +
+            '</head>' +
+            '<body>' +
+            '<h1>Title</h1>' +
+            '</body>' +
+            '</html>';
+
+    var doc = document.implementation.createHTMLDocument("");
+
+    var domRoot;
+    if (htmlStr.indexOf("<html") !== -1) {
+        doc.documentElement.innerHTML = htmlStr;
+        domRoot = doc.documentElement;
+    }
+    else if (htmlStr.indexOf("<body") !== -1) {
+        doc.documentElement.innerHTML = htmlStr;
+        domRoot = doc.body;
+    }
+    else {
+        doc.body.innerHTML = htmlStr;
+        domRoot = doc.body.firstElementChild;
+    }
+
+    var autoIncrement = 0;
+    var tree = buildTree(domRoot);
+
+    function buildTree(domNode, depth) {
+        var d3Node = new DeltaJS.tree.Node();
+        d3Node.id = ++this.autoIncrement;
+        d3Node.depth = depth || 0;
+
+        switch (domNode.nodeType) {
+            case Node.ELEMENT_NODE:
+                d3Node.value = domNode.nodeName;
+                d3Node.type = "element";
+
+                if (domNode.childNodes.length) {
+//                    d3Node.children = [];
+//                    d3Node._children = [];
+                    [].forEach.call(domNode.childNodes, function (domChildNode) {
+//                        var d3ChildNode = {};
+                        d3Node.append(this.buildTree(domChildNode, d3Node.depth+1));
+                    }.bind(this));
+                }
+
+                break;
+            case Node.TEXT_NODE:
+                d3Node.name = "#text";
+                d3Node.type = domNode.nodeValue.match(/^\s+$/) ? "text indent" : "text";
+
+                break;
+            case Node.COMMENT_NODE:
+                d3Node.name = "#comment";
+                d3Node.type = "comment";
+
+                break;
+        }
+
+        return d3Node;
+    }
+
+    debugger;
+</script>
+</body>
+</html>

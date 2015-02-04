@@ -1,13 +1,27 @@
 {
-  "name": "DOM_Visualizer",
+  "name": "d3.domVisualizer",
   "version": "0.0.0",
+  "homepage": "https://github.com/bioub/d3.domVisualizer",
   "authors": [
-    "Romain Bohdanowicz <romain.bohdanowicz@gmail.com>"
+    "Romain Bohdanowicz @bioub"
+  ],
+  "moduleType": [
+    "amd"
   ],
   "license": "MIT",
-  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
     "d3": "~3.4.11",
-    "ace-builds": "~1.1.5"
+    "ace": "~1.1.5",
+    "node-delta": "https://github.com/bioub/node-delta.git#master",
+    "requirejs": "~2.1.15",
+    "semantic-ui": "~0.19.3",
+    "jquery-ui": "~1.11.1"
   }
 }

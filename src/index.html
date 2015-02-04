@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Visualizer</title>
+
+    <link rel="stylesheet" href="../bower_components/semantic-ui/build/packaged/css/semantic.css">
+    <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/collections/menu.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/collections/form.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/elements/input.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/elements/icon.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/elements/button.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/elements/label.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/semantic-ui/build/uncompressed/modules/checkbox.css">-->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <!--<script src="../bower_components/jquery-ui/jquery-ui.js"></script>-->
+    <!--<script src="../bower_components/semantic-ui/build/packaged/javascript/semantic.js"></script>-->
+    <!--<script src="../bower_components/semantic-ui/build/uncompressed/modules/checkbox.js"></script>-->
+    <!--<link rel="stylesheet" href="css/d3.domVisualizer.css">-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <style>
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 8px;
+            color: #222;
+            font-family: 'Open Sans', arial, sans-serif;
+            height: 100%;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        #editorPane {
+            /*width: 50%;*/
+            height: 40%;
+            /*float: left;*/
+            /*padding: 0 5px 23px 5px;*/
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            padding-top: 24px;
+            position: relative;
+        }
+
+        #editorPane .divider {
+            position: absolute;
+            width: 100%;
+            top: 0;
+        }
+
+        #editor {
+            font: 10pt 'Source Code Pro', sans-serif;
+            outline: none;
+            resize: none;
+            /*border: 0px solid transparent;*/
+            /*border-radius: 8px;*/
+            /*border-top: 24px solid transparent;*/
+            /*border: none;*/
+            /*padding: 10px;*/
+            width: 100%;
+            /*height: 100%;*/
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 100%;
+            /*float: left;*/
+            /*padding: 0 5px 23px 5px;*/
+            /*box-sizing: border-box;*/
+            /*-moz-box-sizing: border-box;*/
+        }
+
+        #container {
+            /*overflow: hidden;*/
+            height: 100%;
+        }
+
+        .ui.fitted.divider {
+            margin: 4px 0;
+            cursor: ns-resize;
+        }
+
+        #treePane {
+            height: 60%;
+            /*border-radius: 8px;*/
+            border: 5px solid #222;
+            background: #fff;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            /*float: left;*/
+            width: 100%;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            overflow: auto;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body id="body" class="module pushed">
+<style>
+    body.pushed {
+        margin-right: 275px !important;
+    }
+    @font-face {
+        font-family: 'icomoon';
+        src:url('fonts/icomoon.eot?5c85ku');
+        src:url('fonts/icomoon.eot?#iefix5c85ku') format('embedded-opentype'),
+        url('fonts/icomoon.woff?5c85ku') format('woff'),
+        url('fonts/icomoon.ttf?5c85ku') format('truetype'),
+        url('fonts/icomoon.svg?5c85ku#icomoon') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    [class^="icon-"], [class*=" icon-"] {
+        font-family: 'icomoon';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-tree:before {
+        content: "\e600";
+    }
+
+</style>
+
+<div id="container">
+    <div id="treePane"></div>
+    <div id="editorPane">
+        <div class="ui horizontal icon divider fitted">
+            <i class="resize vertical icon"></i>
+        </div>
+        <div id="editor">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;DOM Visualizer&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1 id=&quot;title&quot;&gt;DOM Visualizer&lt;/h1&gt;
+        &lt;div class=&quot;contact&quot;&gt;
+            &lt;!-- This is a comment --&gt;
+            &lt;h2&gt;Romain Bohdanowicz&lt;/h2&gt;
+            &lt;p id=&quot;twitter&quot;&gt;Twitter : @bioub&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+        </div>
+    </div>
+</div>
+
+<div class="ui vertical menu sidebar right active">
+    <div class="item">
+        <h2 style="margin-bottom: 0.4em">
+            <span class="icon-tree"></span>
+            d3.domVisualizer
+        </h2>
+
+        <div style="font-size: 0.9em; color: #999;">by Romain Bohdanowicz - @bioub</div>
+    </div>
+    <a class="item" id="fitToScreen">
+        <div class="ui checkbox">
+            <input type="checkbox" checked>
+            <label>Fit to screen</label>
+        </div>
+    </a>
+    <a class="item" id="showTextNodes">
+        <div class="ui checkbox">
+            <input type="checkbox" checked>
+            <label>Show Text Nodes</label>
+        </div>
+    </a>
+    <a class="item" id="showIndentNodes">
+        <div class="ui checkbox ">
+            <input type="checkbox" checked>
+            <label>Show Indent Nodes</label>
+        </div>
+    </a>
+    <a class="item" id="autoupdate">
+        <div class="ui checkbox">
+            <input type="checkbox">
+            <label>Auto-update when valid</label>
+        </div>
+    </a>
+
+    <div class="item">
+        <div id="update" class="ui green fluid submit button">
+            <i class="ui icon refresh"></i>
+            Update
+        </div>
+    </div>
+
+    <div class="item">
+        <div id="download" class="ui blue fluid submit button">
+            <i class="ui icon download disk"></i>
+            Download SVG
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+
+<!-- build:js app/vendor.js -->
+<!-- bower:js -->
+<script src="../bower_components/d3/d3.js"></script>
+<script src="../bower_components/requirejs/require.js"></script>
+<!-- endbower -->
+<!--<script src="../bower_components/node-delta/dist/browser/delta.js"></script>-->
+<!--<script src="../bower_components/ace-builds/src/ace.js"></script>-->
+<!-- endbuild -->
+
+
+<script src="../d3.domVisualizer.min.js"></script>
+<script>
+    require.config({
+        paths: {
+            "ace": "../bower_components/ace/lib/ace",
+            "d3": "../bower_components/d3/d3",
+            "delta": "../bower_components/node-delta/lib",
+            "xmlshim": "../bower_components/node-delta/node_modules/xmlshim"
+        }
+    });
+
+    require(["ace/ace", "d3", "js/d3.domVisualizer"], function (ace, d3, domVisualizer) {
+
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/html");
+
+        var domRenderer = new d3.domVisualizer("#treePane");
+        domRenderer.parseHTML(editor.getValue());
+        domRenderer.update(true);
+
+        $('#download').click(function (e) {
+            var svg = document.querySelector("svg");
+
+            var source = (new XMLSerializer()).serializeToString(svg);
+            var url = URL.createObjectURL(new Blob([source], { "type" : "text\/xml" }));
+
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.setAttribute("class", "svg-crowbar");
+            a.setAttribute("download", "domVisualization.svg");
+            a.setAttribute("href", url);
+            a.style["display"] = "none";
+            a.target = "_blank";
+            a.click();
+            document.body.removeChild(a);
+
+            setTimeout(function() {
+                URL.revokeObjectURL(url);
+            }, 10);
+        });
+
+        $('a.item').click(function (e) {
+            e.preventDefault();
+
+            var checkbox = $(this).find('.checkbox:not(.disabled) input');
+            checkbox[0].checked = !checkbox[0].checked;
+        });
+
+        $('#autoupdate').click(function (e) {
+            e.preventDefault();
+
+            function onChangeAnnotation() {
+                if (!editor.getSession().getAnnotations().length) {
+                    domRenderer.parseHTML(editor.getValue());
+                    domRenderer.update(true);
+                }
+            }
+
+            if($('#update').hasClass('disabled')) {
+                $('#update').removeClass('disabled');
+                editor.getSession().off("changeAnnotation", onChangeAnnotation);
+            }
+            else {
+                $('#update').addClass('disabled');
+                editor.getSession().on("changeAnnotation", onChangeAnnotation);
+            }
+        });
+
+        $('#update:not(.disabled)').click(function (e) {
+            e.preventDefault();
+            domRenderer.parseHTML(editor.getValue());
+            domRenderer.update(true);
+        });
+
+
+        $('#fitToScreen').click(function (e) {
+            e.preventDefault();
+            if ($(this).find('input[type="checkbox"]').prop('checked')) {
+                domRenderer.tree.nodeSize(null);
+                domRenderer.tree.size([domRenderer.container.clientWidth + 43,
+                            domRenderer.container.clientHeight - 45]);
+            }
+            else {
+                domRenderer.tree.size([ 1, 1 ]);
+                domRenderer.tree.nodeSize(domRenderer.nodeSize);
+            }
+            domRenderer.update(false);
+        });
+
+        $('#showTextNodes').click(function (e) {
+            $('#showIndentNodes .ui.checkbox').toggleClass('disabled');
+        });
+
+        var offsetYDown = 0;
+        $('.divider').mousedown(function(e){
+
+            offsetYDown = e.clientY - this.parentNode.offsetTop - this.offsetTop;
+            console.log(offsetYDown);
+            $(window).on('mousemove', resize)
+
+        });
+
+        function resize(e) {
+            var container = document.querySelector('#container')
+
+            var tree = document.querySelector('#treePane');
+
+            var nextTreeHeight = e.clientY - offsetYDown - 4 - tree.offsetTop;
+
+            if(nextTreeHeight / $('#container').innerHeight() > 0.3 &&
+                    nextTreeHeight / $('#container').innerHeight() < 0.9) {
+                tree.style.height = nextTreeHeight + 'px';
+                var editorPane = document.querySelector('#editorPane');
+                editorPane.style.height = $('#container').innerHeight() - $('#treePane').outerHeight() + "px";
+
+
+                domRenderer.tree.size([domRenderer.container.clientWidth+43, domRenderer.container.clientHeight-45]);
+                domRenderer.update(false);
+            }
+        }
+
+
+        $(window).resize(function(e) {
+            domRenderer.tree.size([domRenderer.container.clientWidth+43, domRenderer.container.clientHeight-45]);
+            domRenderer.update(false);
+        });
+
+        $(window).mouseup(function(e){
+            $(window).off('mousemove', resize);
+            $('#treePane').css('height', $('#treePane').outerHeight() / $('#container').innerHeight() * 100 + "%");
+            $('#editorPane').css('height', $('#editorPane').outerHeight() / $('#container').innerHeight() * 100 + "%");
+        });
+//        textNodesCheckbox.addEventListener('click', function () {
+        //        if (textNodesCheckbox.checked) {
+        //            domRenderer.addNodesByType("text");
+        //            if (indentNodesCheckbox.checked) {
+        //                domRenderer.addNodesByType("text indent");
+        //            }
+        //        }
+        //        else {
+        //            domRenderer.removeNodesByType("text");
+        //        }
+        //
+        //        domRenderer.update(true);
+        //
+        //        indentNodesCheckbox.parentNode.style.display = (indentNodesCheckbox.parentNode.style.display === "inline" || indentNodesCheckbox.parentNode.style.display === "") ? "none" : "inline";
+        //    });
+
+    });
+    //(function () {
+    //    'use strict';
+    //
+    //    var editor = ace.edit("editor");
+    //    editor.setTheme("ace/theme/monokai");
+    //    editor.getSession().setMode("ace/mode/html");
+    //
+    //    var domRenderer = new d3.domVisualizer("#tree");
+    //    domRenderer.parseHTML(editor.getValue());
+    //    domRenderer.update(true);
+    //
+    //
+    //    var textNodesCheckbox = document.querySelector('#showTextNodes input[type="checkbox"]');
+    //    var indentNodesCheckbox = document.querySelector('#showIndentNodes input[type="checkbox"]');
+    //
+    //    document.querySelector('#update').addEventListener('click', function () {
+    //        domRenderer.parseHTML(editor.getValue());
+    //        domRenderer.update(true);
+    //    });
+    //
+    //    textNodesCheckbox.addEventListener('click', function () {
+    //        if (textNodesCheckbox.checked) {
+    //            domRenderer.addNodesByType("text");
+    //            if (indentNodesCheckbox.checked) {
+    //                domRenderer.addNodesByType("text indent");
+    //            }
+    //        }
+    //        else {
+    //            domRenderer.removeNodesByType("text");
+    //        }
+    //
+    //        domRenderer.update(true);
+    //
+    //        indentNodesCheckbox.parentNode.style.display = (indentNodesCheckbox.parentNode.style.display === "inline" || indentNodesCheckbox.parentNode.style.display === "") ? "none" : "inline";
+    //    });
+    //
+    //    indentNodesCheckbox.addEventListener('click', function () {
+    //        if (indentNodesCheckbox.checked) {
+    //            domRenderer.addNodesByType("text indent");
+    //        }
+    //        else {
+    //            domRenderer.removeNodesByType("text indent");
+    //        }
+    //
+    //        domRenderer.update(true);
+    //    });
+    //
+    //    document.querySelector("#expand").addEventListener("input", function() {
+    //        domRenderer.autosize(this.value);
+    //        domRenderer.update(true);
+    //    });
+    //
+    //    document.querySelector('#fitToScreen input[type="checkbox"]').addEventListener("click", function() {
+    //        if (this.checked) {
+    //            console.log("checked")
+    //            domRenderer.tree.nodeSize(null);
+    //            domRenderer.tree.size([domRenderer.container.clientWidth+43, domRenderer.container.clientHeight-45]);
+    //        }
+    //        else {
+    //            console.log("unchecked")
+    //            domRenderer.tree.size([ 1, 1 ]);
+    //            domRenderer.tree.nodeSize(domRenderer.nodeSize);
+    //        }
+    //        domRenderer.update(false);
+    //    });
+    //}());
+
+    //
+</script>
+
+</body>
