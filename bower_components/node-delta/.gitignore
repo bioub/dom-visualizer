@@ -1,0 +1,9 @@
+*~
+.*.swp
+dist
+examples/lcs/delta.js
+examples/xcc/delta.js
+examples/srcdiff/srcdiff.js
+examples/vizmerge/delta
+examples/vizmerge/xmlshim.js
+node_modules

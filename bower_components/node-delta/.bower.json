@@ -1,0 +1,13 @@
+{
+  "name": "node-delta",
+  "homepage": "https://github.com/bioub/node-delta",
+  "_release": "8991825632",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "899182563236339867d7f2605c0cec2f20fae4ef"
+  },
+  "_source": "https://github.com/bioub/node-delta.git",
+  "_target": "master",
+  "_originalSource": "https://github.com/bioub/node-delta.git"
+}

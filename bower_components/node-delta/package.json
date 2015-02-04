@@ -1,0 +1,21 @@
+{
+  "name": "deltajs",
+  "version": "0.0.3",
+  "description": "Diff and patch engine for DOM trees",
+  "main": "./lib/main",
+  "bin": {
+    "djdiff": "bin/djdiff.js",
+    "djpatch": "bin/djpatch.js"
+  },
+  "dependencies": {
+    "mime": "1.2.x",
+    "optparse": "1.0.x",
+    "xmlshim": "0.0.x"
+  },
+  "devDependencies": {
+    "browserify": "1.8.x",
+    "connect": "2.2.x",
+    "nodeunit": "0.6.x",
+    "requirejs": "1.0.x" 
+  }
+}
